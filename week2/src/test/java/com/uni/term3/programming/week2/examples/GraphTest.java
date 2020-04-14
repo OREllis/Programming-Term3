@@ -14,15 +14,16 @@ public class GraphTest {
     public void testDepthFirstSearch() {
         final Graph testGraph = makeGraph();
 
-        testGraph.printEdgres();
+        testGraph.printEdges();
         testGraph.depthFirstSearch(b);
     }
 
     @Test
     public void testDepthFirstSearchNullGraph() {
         final Graph nullGraph = new Graph(false);
-        nullGraph.printEdgres();
+        nullGraph.printEdges();
         nullGraph.depthFirstSearch(b);
+        System.out.println();
     }
 
     private Graph makeGraph() {

@@ -1,13 +1,18 @@
 package com.uni.term3.programming.week2.examples;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Optional;
 
 public class Graph {
 
     private final HashMap<Node, LinkedList<Node>> adjacencyMap;
-    private boolean directed;
+    private final boolean directed;
+
+    public Graph() {
+        this(false);
+    }
 
     public Graph(final boolean directed) {
         this.directed = directed;
@@ -25,7 +30,7 @@ public class Graph {
         }
     }
 
-    public void printEdgres() {
+    public void printEdges() {
         for (Node n : adjacencyMap.keySet()) {
             System.out.print("The " + n.getName() + " has an edge towards ");
             adjacencyMap.get(n).forEach(neighbor -> System.out.print(neighbor.getName() + " "));
@@ -41,15 +46,9 @@ public class Graph {
         target.visit();
         System.out.print(target.getName() + " ");
 
-        final LinkedList<Node> neighbors = adjacencyMap.get(target);
-
-        if (neighbors != null) {
-            for (Node neighbor : neighbors) {
-                if (!neighbor.isVisited()) {
-                    depthFirstSearch(neighbor);
-                }
-            }
-        }
+        CollectionUtils.emptyIfNull(adjacencyMap.get(target)).stream()
+                .filter(neighbor -> !neighbor.isVisited())
+                .forEach(this::depthFirstSearch);
     }
 
     private void addEdgeHelper(final Node a, final Node b) {
@@ -66,8 +65,6 @@ public class Graph {
     }
 
     private void addKeyIfNotInMap(final Node key) {
-        if (!adjacencyMap.containsKey(key)) {
-            adjacencyMap.put(key, null);
-        }
+        adjacencyMap.putIfAbsent(key, null);
     }
 }
