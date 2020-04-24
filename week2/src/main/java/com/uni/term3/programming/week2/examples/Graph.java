@@ -1,5 +1,6 @@
 package com.uni.term3.programming.week2.examples;
 
+import com.sun.istack.internal.NotNull;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.HashMap;
@@ -49,6 +50,27 @@ public class Graph {
         CollectionUtils.emptyIfNull(adjacencyMap.get(target)).stream()
                 .filter(neighbor -> !neighbor.isVisited())
                 .forEach(this::depthFirstSearch);
+    }
+
+    @NotNull
+    public void breadthFirstSearch(final Node node) {
+        final LinkedList<Node> queue = new LinkedList<>();
+        queue.add(node);
+
+        while (!queue.isEmpty()) {
+            final Node current = queue.removeFirst();
+
+            if (!current.isVisited()) {
+                current.visit();
+                System.out.print(current.getName() + " ");
+
+                CollectionUtils.emptyIfNull(adjacencyMap.get(current)).stream()
+                        .filter(neighbor -> !neighbor.isVisited())
+                        .forEach(queue::add);
+            }
+        }
+
+        System.out.println();
     }
 
     private void addEdgeHelper(final Node a, final Node b) {
