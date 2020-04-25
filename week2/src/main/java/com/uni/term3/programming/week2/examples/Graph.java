@@ -1,10 +1,10 @@
 package com.uni.term3.programming.week2.examples;
 
 import com.sun.istack.internal.NotNull;
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 public class Graph {
 
@@ -21,8 +21,8 @@ public class Graph {
     }
 
     public void addEdge(final Node source, final Node destination) {
-        addKeyIfNotInMap(source);
-        addKeyIfNotInMap(destination);
+        adjacencyMap.putIfAbsent(source, null);
+        adjacencyMap.putIfAbsent(destination, null);
 
         addEdgeHelper(source, destination);
 
@@ -40,7 +40,7 @@ public class Graph {
     }
 
     public boolean hasEdge(final Node src, final Node dest) {
-        return adjacencyMap.containsKey(src) && adjacencyMap.get(src).contains(dest);
+        return adjacencyMap.containsKey(src) && CollectionUtils.emptyIfNull(adjacencyMap.get(src)).contains(dest);
     }
 
     public void depthFirstSearch(final Node target) {
@@ -54,13 +54,12 @@ public class Graph {
 
     @NotNull
     public void breadthFirstSearch(final Node node) {
-        final LinkedList<Node> queue = new LinkedList<>();
-        queue.add(node);
+        final LinkedList<Node> queue = new LinkedList<>(Collections.singletonList(node));
 
         while (!queue.isEmpty()) {
             final Node current = queue.removeFirst();
 
-            if (!current.isVisited()) {
+            if (current.isNorVisited()) {
                 current.visit();
                 System.out.print(current.getName() + " ");
 
@@ -71,6 +70,25 @@ public class Graph {
         }
 
         System.out.println();
+    }
+
+    public void printTransitiveClosure() {
+        List<Node> graphNodes = new ArrayList<>(adjacencyMap.keySet());
+        graphNodes.sort(new Node.NodeComparator());
+
+        System.out.print("   ");
+        graphNodes.forEach(x -> System.out.print(x.getName() + " "));
+        System.out.println();
+
+        for (Node k : graphNodes) {
+            System.out.print(k.getName() + "| ");
+
+            for (Node i : graphNodes) {
+                System.out.print((hasEdge(k, i) ? "1" : "0") + " ");
+            }
+
+            System.out.println();
+        }
     }
 
     private void addEdgeHelper(final Node a, final Node b) {
@@ -84,9 +102,5 @@ public class Graph {
 
         temp.add(b);
         adjacencyMap.put(a, temp);
-    }
-
-    private void addKeyIfNotInMap(final Node key) {
-        adjacencyMap.putIfAbsent(key, null);
     }
 }

@@ -2,6 +2,8 @@ package com.uni.term3.programming.week2.examples;
 
 import lombok.Getter;
 
+import java.util.Comparator;
+
 @Getter
 public class Node {
     private int n;
@@ -20,5 +22,16 @@ public class Node {
 
     public void unvisit() {
         this.visited = false;
+    }
+
+    public boolean isNorVisited() {
+        return !this.isVisited();
+    }
+
+    public static class NodeComparator implements Comparator<Node> {
+        @Override
+        public int compare(final Node node1, final Node node2) {
+            return node1.getN() - node2.getN();
+        }
     }
 }
