@@ -70,6 +70,7 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 /.idea/
-/week[1-12]/target
-/week[1-12]/week*.iml
+/week[1..12]/target
+/week[1..12]/week[1..12].iml
 Programming-Term3.iml
+/week3/week3.iml

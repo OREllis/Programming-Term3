@@ -1,7 +1,5 @@
 package com.uni.term3.programming.week2.examples;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.*;
@@ -52,7 +50,6 @@ public class Graph {
                 .forEach(this::depthFirstSearch);
     }
 
-    @NotNull
     public void breadthFirstSearch(final Node node) {
         final LinkedList<Node> queue = new LinkedList<>(Collections.singletonList(node));
 
