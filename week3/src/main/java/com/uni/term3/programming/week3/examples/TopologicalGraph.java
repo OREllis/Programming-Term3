@@ -22,13 +22,10 @@ public class TopologicalGraph {
 
     public void topologicalUtil(final int v, boolean[] visited, final Stack<Integer> stack) {
         visited[v] = true;
-        Integer i;
 
-        Iterator<Integer> it = adjacency[v].iterator();
-        while(it.hasNext()){
-            i = it.next();
-            if (!visited[i]) {
-                topologicalUtil(i, visited, stack);
+        for (Integer integer : adjacency[v]) {
+            if (!visited[integer]) {
+                topologicalUtil(integer, visited, stack);
             }
         }
 
@@ -36,7 +33,7 @@ public class TopologicalGraph {
     }
 
     public void topologicalSort() {
-        Stack<Integer> stack = new Stack<>();
+        final Stack<Integer> stack = new Stack<>();
         boolean[] visited = new boolean[nodeCount];
         Arrays.fill(visited, false);
 
@@ -53,7 +50,7 @@ public class TopologicalGraph {
 
     public static void main(String[] args) {
         TopologicalGraph graph =  new TopologicalGraph(6);
-        graph.addEdge(5, 0);
+        graph.addEdge(5, 2);
         graph.addEdge(5, 0);
         graph.addEdge(4, 0);
 
