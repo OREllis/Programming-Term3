@@ -1,6 +1,8 @@
 package com.uni.term3.programming.week3.examples;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.*;
 
@@ -103,6 +105,16 @@ public class Graph {
 
         while(!nodeStack.isEmpty()) {
             System.out.print(nodeStack.pop().getName() + " ");
+        }
+    }
+
+    public void printDijkstraDistances(final Node src) {
+        final ArrayList<Pair<String, Integer>> dist = new ArrayList<>();
+        boolean[] shortestPathTreeSet = new boolean[adjacencyMap.size()];
+        Arrays.fill(shortestPathTreeSet, false);
+
+        dist.add(new ImmutablePair<>(src.getName(), 0));
+        for (Node current: adjacencyMap.keySet()) {
         }
     }
 
